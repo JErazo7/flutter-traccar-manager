@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert' as json;
+import 'package:geopoint/geopoint.dart';
 import 'package:meta/meta.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:dio/dio.dart';
@@ -39,7 +40,7 @@ class Traccar {
   final _dio = Dio();
   final _devicesMap = <int, Device>{};
   StreamSubscription<dynamic> _rawPosSub;
-  final _positions = StreamController<Device>.broadcast();
+  final _positions = StreamController<GeoPoint>.broadcast();
   String _cookie;
 
   /// On ready callback
@@ -60,7 +61,7 @@ class Traccar {
   }
 
   /// Get the device positions
-  Future<Stream<Device>> positions() async {
+  Future<Stream<GeoPoint>> positions() async {
     if (verbose) {
       print("Setting up positions stream");
     }
@@ -79,36 +80,13 @@ class Traccar {
         DevicePosition pos;
         for (final posMap in dataMap["positions"]) {
           //print("POS MAP $posMap");
-          pos = DevicePosition.fromJson(posMap as Map<String, dynamic>);
-          final id = posMap["deviceId"] as int;
-          Device device;
-          if (_devicesMap.containsKey(id)) {
-            device = _devicesMap[id];
-          } else {
-            device = deviceFromPosition(posMap as Map<String, dynamic>,
-                keepAlive: Duration(minutes: keepAlive));
-          }
-          device.position = pos.geoPoint;
-          _devicesMap[id] = device;
-          _positions.sink.add(device);
+          pos = DevicePosition.fromJson(posMap as Map<String, dynamic>);          
+          _positions.sink.add(pos.geoPoint);
           if (verbose) {
             print(" - $pos");
           }
         }
-      } else {
-        for (final d in dataMap["devices"]) {
-          if (verbose) {
-            print("Devices update:");
-          }
-          if (!_devicesMap.containsKey(d["id"])) {
-            final id = int.parse(d["id"].toString());
-            d["name"] ??= d["id"].toString();
-            final device = Device(id: id, name: d["name"].toString());
-            _devicesMap[id] = device;
-            //print(" - ${device.name}");
-          }
-        }
-      }
+      } 
     });
     return _positions.stream;
   }

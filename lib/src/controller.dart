@@ -9,6 +9,7 @@ import 'package:geopoint/geopoint.dart';
 import 'package:geopoint_location/geopoint_location.dart';
 import 'package:map_controller/map_controller.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:traccar_manager/src/traccar/client.dart';
 
 import 'marker.dart';
 
@@ -27,8 +28,7 @@ class LiveMapController extends StatefulMapController {
   })  : assert(mapController != null),
         super(mapController: mapController, verbose: verbose) {
     print("init map controller");
-    // get a new position stream
-    _loc = LocationStream();
+    initTraccar();
     // marker builder
     liveMarkerBuilder ??= defaultLiveMarkerBuilder;
     // state
@@ -50,6 +50,10 @@ class LiveMapController extends StatefulMapController {
   /// Verbosity
   @override
   bool verbose;
+
+  //tracar client
+  var _trac;
+  var _positions;
 
   /// Enable or not the position stream
   bool positionStreamEnabled;
@@ -81,11 +85,11 @@ class LiveMapController extends StatefulMapController {
   /// The positions updates flux
   StreamController<Device> devicesFlux;
 
-  LocationStream _loc;
+
   StreamSubscription<GeoPoint> _geoPointStreamSubscription;
 
   /// The stream of [GeoPoint] updates
-  Stream<GeoPoint> get positionStream => _loc.geoPointStream;
+  Stream<GeoPoint> get positionStream => _positions.geoPointStream;
 
   /// The current position
   GeoPoint get position => _currentPosition;
@@ -104,6 +108,15 @@ class LiveMapController extends StatefulMapController {
   /// Center the map on the live marker
   Future<void> centerOnLiveMarker() async {
     mapController.move(_currentPosition.toLatLng(), mapController.zoom);
+  }
+
+  /// Init traccar with url and token
+  Future<void> initTraccar() async {
+    _trac = Traccar(
+        serverUrl: 'demo4.traccar.org',
+        userToken: '7jUybUd1IJ62wj8qlRvaicM7O1pOGzNT');
+    unawaited(_trac.init());
+    await _trac.onReady;   
   }
 
   /// Toggle live position stream updates
@@ -130,14 +143,13 @@ class LiveMapController extends StatefulMapController {
     }
   }
 
-  void _subscribeToPositionStream() {
-    _loc.initGeoPointStream(
-        timeInterval: updateTimeInterval, distanceFilter: updateDistanceFilter);
-    _geoPointStreamSubscription =
-        _loc.geoPointStream.listen(_positionStreamCallbackAction);
+  void _subscribeToPositionStream() async{
+    _positions = await _trac.positions();
+    _geoPointStreamSubscription = _positions.listen(_positionStreamCallbackAction);
   }
 
   void _positionStreamCallbackAction(GeoPoint geoPoint) {
+    
     if (verbose) {
       print("Position update $geoPoint");
     }
