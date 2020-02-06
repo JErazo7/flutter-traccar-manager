@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'bottom_bar.dart';
 import 'home.dart';
-import 'rotation.dart';
-import 'sidebar.dart';
-import 'simple.dart';
-import 'marker.dart';
-
-final routes = {
-  '/simple': (BuildContext context) => SimpleLiveMapPage(),
-  '/bottom_bar': (BuildContext context) => LiveMapWithBottomBarMapPage(),
-  '/sidebar': (BuildContext context) => SideBarPage(),
-  '/rotation': (BuildContext context) => RotationPage(),
-  '/marker': (BuildContext context) => LivemapMarkerPage(),
-};
 
 class MyApp extends StatelessWidget {
   @override
@@ -21,8 +8,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Livemap examples',
-      routes: routes,
-      theme: ThemeData(
+        theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: HomePage(),
