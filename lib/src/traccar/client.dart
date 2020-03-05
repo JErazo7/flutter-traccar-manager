@@ -4,10 +4,7 @@ import 'package:geopoint/geopoint.dart';
 import 'package:meta/meta.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:dio/dio.dart';
-import 'package:device/device.dart';
-import 'models/position.dart';
-import 'models/device_from_position.dart';
-import 'queries.dart';
+import 'models/device_position.dart';
 
 /// The main class to handle device positions
 class Traccar {
@@ -29,16 +26,12 @@ class Traccar {
   /// Print info at runtime
   final bool verbose;
 
-  /// The queries available
-  TraccarQueries query;
-
   /// Minutes a device is considered alive
   int keepAlive;
 
   final _readyCompleter = Completer<Null>();
 
   final _dio = Dio();
-  final _devicesMap = <int, Device>{};
   StreamSubscription<dynamic> _rawPosSub;
   final _positions = StreamController<GeoPoint>.broadcast();
   String _cookie;
@@ -52,8 +45,7 @@ class Traccar {
       print("Initializing Traccar cli");
     }
     await _getCookie();
-    query =
-        TraccarQueries(cookie: _cookie, serverUrl: serverUrl, verbose: verbose);
+    
     if (verbose) {
       print("Traccar client initialized");
     }
@@ -138,5 +130,6 @@ class Traccar {
   /// Dispose if using the positions stream
   void dispose() {
     _rawPosSub.cancel();
+    _positions.close();
   }
 }

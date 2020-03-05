@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:fluxmap/fluxmap.dart';
 import 'package:geopoint/geopoint.dart';
-import 'package:geopoint_location/geopoint_location.dart';
 import 'package:map_controller/map_controller.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:traccar_manager/src/traccar/client.dart';
