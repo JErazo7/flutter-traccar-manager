@@ -112,8 +112,8 @@ class LiveMapController extends StatefulMapController {
   /// Init traccar with url and token
   Future<void> initTraccar() async {
     _trac = Traccar(
-        serverUrl: 'demo4.traccar.org',
-        userToken: '7jUybUd1IJ62wj8qlRvaicM7O1pOGzNT');
+        serverUrl: '167.172.155.28',
+        userToken: '8xTBoh7tWXXR5182Mp7BzYV5yBbn9Tfk');
     unawaited(_trac.init());
     await _trac.onReady;   
   }
