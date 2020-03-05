@@ -46,7 +46,7 @@ class _LivemapMarkerPageState extends State<LivemapMarkerPage> {
     return Scaffold(
         body: LiveMap(
             controller: liveMapController,
-            center: LatLng(51.0, 0.0),
+            center: LatLng(-0.2501894, -79.1638053),
             zoom: 16.0),
         floatingActionButton: FloatingActionButton(
             child: _liveMapStatusIcon,
