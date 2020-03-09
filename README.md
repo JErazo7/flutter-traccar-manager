@@ -43,8 +43,7 @@ El resto de bibliotecas que se utilizan son las siguientes:
 
 Toda la logica de implementacion del mapa y sus marcadores se encuentra en el archivo `controller.dart` en la ruta `lib/src/controller.dart`.
 
-**Nota:** Como guías para extender esta aplicación en un desarrollo futuro, consultar los siguientes repositorios, que abarcan un sinnúmero de funcionalidades para manejar mapas en ***Flutter*** :
+**Nota:** Como guía para extender esta aplicación en un desarrollo futuro, consultar el siguiente repositorio, que abarcan un sinnúmero de funcionalidades para manejar mapas en ***Flutter*** :
 
  - [livemap](https://github.com/synw/livemap)
- - [map_controller]([https://github.com/synw/map_controller](https://github.com/synw/map_controller))
 
