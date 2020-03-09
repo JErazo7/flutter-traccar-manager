@@ -107,7 +107,7 @@ packages:
     source: hosted
     version: "3.0.8"
   extra_pedantic:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: extra_pedantic
       url: "https://pub.dartlang.org"
@@ -327,7 +327,7 @@ packages:
     source: hosted
     version: "1.6.0"
   pedantic:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: pedantic
       url: "https://pub.dartlang.org"

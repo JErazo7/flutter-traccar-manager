@@ -113,7 +113,7 @@ class LiveMapController extends StatefulMapController {
   Future<void> initTraccar() async {
     _trac = Traccar(
         serverUrl: '167.172.155.28',
-        userToken: '8xTBoh7tWXXR5182Mp7BzYV5yBbn9Tfk');
+        userToken: 'Rh9wKOaPKV8toPWFeWRd4yd6sbyJkY8p');
     unawaited(_trac.init());
     await _trac.onReady;   
   }
