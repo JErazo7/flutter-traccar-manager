@@ -47,9 +47,4 @@ Toda la logica de implementacion del mapa y sus marcadores se encuentra en el ar
 
  - [livemap](https://github.com/synw/livemap)
 
-aes:ecb:md5
-
-out:
-FilTZHBt9Yfy1N+qGahIGDsQiULUpmHlzJljlc/Pt61hBifGM+c/WuRHcPxX3Bxzqdl11lMWOZnN/XNUc5IZJg
-
-
+[aes:ecb:md5 out]: FilTZHBt9Yfy1N+qGahIGDsQiULUpmHlzJljlc/Pt61hBifGM+c/WuRHcPxX3Bxzqdl11lMWOZnN/XNUc5IZJg
